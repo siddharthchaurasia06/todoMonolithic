@@ -16,8 +16,8 @@ jobs:
         script: 'npm run build'
         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
 
-    - task: PublishPipelineArtifact@1
+    - task: PublishBuildArtifacts@1
       inputs:
-        targetPath: '$(Pipeline.Workspace)'
-        publishLocation: 'filepath'
-        fileSharePath: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
+        PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
+        ArtifactName: 'ReactTodoUI'
+        publishLocation: 'Container'
