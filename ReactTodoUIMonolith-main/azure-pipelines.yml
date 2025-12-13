@@ -10,3 +10,9 @@ jobs:
         targetType: 'inline'
         script: 'npm install'
         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npm run build'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+
