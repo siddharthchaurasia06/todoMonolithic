@@ -5,11 +5,7 @@ jobs:
   - job: build
     displayName: building application
     steps:
-      - task: PowerShell@2
-        inputs:
-          targetType: 'inline'
-          script: 'npm install'
-      - task: PowerShell@2
-        inputs:
-          targetType: 'inline'
-          script: 'npm run build'
+    - task: PowerShell@2
+      inputs:
+        filePath: 'C:\agent\_work\3\s\ReactTodoUIMonolith-main'
+        arguments: 'npm install'
