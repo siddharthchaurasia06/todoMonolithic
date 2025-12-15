@@ -22,8 +22,7 @@ jobs:
         script: 'npm run build'
         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
     - task: SonarQubeAnalyze@8
-      inputs:
-        jdkversion: 'JAVA_HOME'
+
     - task: SonarQubePublish@8
       inputs:
         pollingTimeoutSec: '300'
