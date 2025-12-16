@@ -14,22 +14,22 @@ jobs:
         cliProjectKey: 'todo_app'
         cliProjectName: 'todo_app'
         cliSources: '.'
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: 'npm install'
-        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    # - task: PowerShell@2
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: 'npm install'
+    #     workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
         
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: 'npm run build'
-        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    # - task: PowerShell@2
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: 'npm run build'
+    #     workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
 
     - task: SonarQubeAnalyze@8
       inputs:
         jdkversion: 'JAVA_HOME'
-
+    
     - task: SonarQubePublish@8
       inputs:
         pollingTimeoutSec: '300'
