@@ -10,7 +10,10 @@ jobs:
       inputs:
         SonarQube: 'sonarqube'
         scannerMode: 'cli'
-        configMode: 'file'
+        configMode: 'manual'
+        cliProjectKey: 'todo_app'
+        cliProjectName: 'todo_app'
+        cliSources: '.'
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
