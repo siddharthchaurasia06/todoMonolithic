@@ -3,11 +3,17 @@ pool: Default
 
 jobs:
   
-        
-
   - job: build
     displayName: building application
     steps:
+    - task: SonarQubePrepare@8
+      inputs:
+        SonarQube: 'sonarqube'
+        scannerMode: 'cli'
+        configMode: 'manual'
+        cliProjectKey: 'todo_app'
+        cliProjectName: 'todo_app'
+        cliSources: '.'
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
@@ -20,15 +26,17 @@ jobs:
         script: 'npm run build'
         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
 
-    - task: PublishBuildArtifacts@1
+    - task: SonarQubeAnalyze@8
       inputs:
-        PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
-        ArtifactName: 'ReactTodoUI'
-        publishLocation: 'Container'
-    - task: PublishBuildArtifacts@1
+        jdkversion: 'JAVA_HOME'
+
+    - task: SonarQubePublish@8
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/ReactTodoUIMonolith-main/build'
-        ArtifactName: 'react-app'
-        publishLocation: 'FilePath'
-        TargetPath: 'https://jhansikirani.file.core.windows.net/file12'
+        pollingTimeoutSec: '300'
+
+    # - task: PublishBuildArtifacts@1
+    #   inputs:
+    #     PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
+    #     ArtifactName: 'ReactTodoUI'
+    #     publishLocation: 'Container'
     
