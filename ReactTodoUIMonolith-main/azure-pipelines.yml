@@ -31,6 +31,8 @@ jobs:
     - task: SonarQubeAnalyze@8
       inputs:
         jdkversion: 'JAVA_HOME'
+        extraProperties: |
+          sonar.branch.name=
     
     - task: SonarQubePublish@8
       inputs:
