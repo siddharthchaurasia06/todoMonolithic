@@ -18,6 +18,7 @@ jobs:
         sonar.branch.name=
 
   - task: SonarQubeAnalyze@8
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
     inputs:
       jdkversion: 'JAVA_HOME'
 
