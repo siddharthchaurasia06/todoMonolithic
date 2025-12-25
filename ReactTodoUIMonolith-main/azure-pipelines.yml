@@ -3,25 +3,12 @@ pool: Default
 
 jobs:
 - job: build
-  displayName: Building application
+  displayName: npm
   steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npm install'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
 
-  - task: SonarQubePrepare@8
-    condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-    inputs:
-      SonarQube: 'sonarqube'
-      scannerMode: 'cli'
-      configMode: 'manual'
-      cliProjectKey: 'todo_app'
-      cliProjectName: 'todo_app'
-      cliSources: '.'
-
-  - task: SonarQubeAnalyze@8
-    condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-    inputs:
-      jdkversion: 'JAVA_HOME'
-
-  - task: SonarQubePublish@8
-    condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-    inputs:
-      pollingTimeoutSec: '300'
+  
