@@ -2,40 +2,42 @@ trigger: none
 pool: Default
 
 jobs:
-  # - job: build
-  #   displayName: building application
-  #   steps:
-  #   - task: PowerShell@2
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: 'npm install'
-  #       workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+  - job: linting
+    steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npm i -D -E @biomejs/biome'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npx @biomejs/biome init'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npx biome lint .'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+        
+  - job: build
+    displayName: building application
+    steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npm install'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
 
-  #   - task: PowerShell@2
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: 'npm run build'
-  #       workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npm run build'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
 
-  #   - task: PublishBuildArtifacts@1
-  #     inputs:
-  #       PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
-  #       ArtifactName: 'ReactTodoUI'
-  #       publishLocation: 'Container'
-- job: linting
-  steps:
-  - task: PowerShell@2
-    inputs:
-      targetType: 'inline'
-      script: 'npm i -D -E @biomejs/biome'
-      workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-  - task: PowerShell@2
-    inputs:
-      targetType: 'inline'
-      script: 'npm audit'
-      workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-  - task: PowerShell@2
-    inputs:
-      targetType: 'inline'
-      script: 'npx @biomejs/biome init'
-      workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
+        ArtifactName: 'ReactTodoUI'
+        publishLocation: 'Container'
