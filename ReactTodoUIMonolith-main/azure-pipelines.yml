@@ -37,7 +37,7 @@ jobs:
         configMode: 'manual'
         cliProjectKey: 'my-project'
         cliProjectName: 'my-project'
-        cliSources: '.'
+        cliSources: 'ReactTodoUIMonolith-main'
 
     - task: PowerShell@2
       inputs:
