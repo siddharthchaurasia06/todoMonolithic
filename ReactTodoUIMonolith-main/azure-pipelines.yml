@@ -37,7 +37,7 @@ jobs:
         configMode: 'manual'
         cliProjectKey: 'my-project'
         cliProjectName: 'my-project'
-        cliSources: 'ReactTodoUIMonolith-main'
+        cliSources: '.'
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
@@ -47,8 +47,7 @@ jobs:
     
     - task: SonarQubeAnalyze@8
       inputs:
-        jdkversion: 'JAVA_HOME'
-
+        jdkversion: 'JAVA_HOME_17_X64'
     - task: SonarQubePublish@8
       inputs:
         pollingTimeoutSec: '300'
