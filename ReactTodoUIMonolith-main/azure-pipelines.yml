@@ -55,9 +55,8 @@ jobs:
             inputs:
               buildType: 'current'
               downloadType: 'single'
-              artifactName: 'build'
+              artifactName: 'ReactTodoUI'
               downloadPath: '$(System.ArtifactsDirectory)'
-
 
 
 
