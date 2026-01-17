@@ -34,39 +34,28 @@ jobs:
         targetType: 'inline'
         script: 'npm run build'
         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
+        ArtifactName: 'ReactTodoUI'
+        publishLocation: 'Container'
 
 
-- job: deploye
+- deployment: deploy
   displayName: deploying code
-  steps:
-    - 
+  environment: 
+      name: 'dev'
+  strategy: 
+    runOnce:
+      deploy:
+        steps:
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'build'
+            downloadPath: '$(System.ArtifactsDirectory)'
 
 
-    # - task: SonarQubePrepare@8
-    #   inputs:
-    #     SonarQube: 'sonQube'
-    #     scannerMode: 'cli'
-    #     configMode: 'manual'
-    #     cliProjectKey: 'my-project'
-    #     cliProjectName: 'my-project'
-    #     cliSources: '.'
-    # - task: PowerShell@2
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: 'npm run build'
-    #     workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
 
-    
-    # - task: SonarQubeAnalyze@8
-    #   inputs:
-    #     jdkversion: 'JAVA_HOME_17_X64'
-    # - task: SonarQubePublish@8
-    #   inputs:
-    #     pollingTimeoutSec: '300'
-
-    # - task: PublishBuildArtifacts@1
-    #   inputs:
-    #     PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
-    #     ArtifactName: 'ReactTodoUI'
-    #     publishLocation: 'Container'
 
