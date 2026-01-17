@@ -1,27 +1,31 @@
 trigger: none
 pool: Default
 stages:
+- stage: linting
+  displayName: linting
+  jobs:
+  - job: linting
+    steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npm i -D -E @biomejs/biome'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npx @biomejs/biome init'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npx biome lint .'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+  
 - stage: build
   displayName: building react app
   jobs:
-  # - job: linting
-  #   steps:
-  #   - task: PowerShell@2
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: 'npm i -D -E @biomejs/biome'
-  #       workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-    
-  #   - task: PowerShell@2
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: 'npx @biomejs/biome init'
-  #       workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-  #   - task: PowerShell@2
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: 'npx biome lint .'
-  #       workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
         
   - job: runbuild
     displayName: building application
