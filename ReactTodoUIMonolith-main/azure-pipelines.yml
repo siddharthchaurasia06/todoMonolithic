@@ -47,6 +47,7 @@ jobs:
     dependsOn: build
     environment: 
         name: 'dev'
+        resourceType: VirtualMachine
     strategy: 
       runOnce:
         deploy:
@@ -60,6 +61,8 @@ jobs:
               pipelineId: '18'
               artifactName: 'ReactTodoUI'
               targetPath: '$(Pipeline.Workspace)'
+          
+          
           
           
 
