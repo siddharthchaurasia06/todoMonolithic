@@ -67,9 +67,8 @@ stages:
               definition: '4'
               buildVersionToDownload: 'specific'
               pipelineId: '19'
-              artifactName: 'build-artifact'
+              artifactName: 'ReactTodoUI'
               targetPath: '$(Pipeline.Workspace)'
-
           
           
           
