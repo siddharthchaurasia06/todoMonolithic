@@ -2,42 +2,54 @@ trigger: none
 pool: Default
 
 jobs:
-  # - job: linting
-  #   steps:
-  #   - task: PowerShell@2
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: 'npm i -D -E @biomejs/biome'
-  #       workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-    
-  #   - task: PowerShell@2
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: 'npx @biomejs/biome init'
-  #       workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-  #   - task: PowerShell@2
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: 'npx biome lint .'
-  #       workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-        
+- job: linting
+  steps:
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: 'npm i -D -E @biomejs/biome'
+      workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+  
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: 'npx @biomejs/biome init'
+      workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: 'npx biome lint .'
+      workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+      
   - job: build
     displayName: building application
     steps:
-    # - task: PowerShell@2
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: 'npm install'
-    #     workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-
-    - task: SonarQubePrepare@8
+    - task: PowerShell@2
       inputs:
-        SonarQube: 'sonQube'
-        scannerMode: 'cli'
-        configMode: 'manual'
-        cliProjectKey: 'my-project'
-        cliProjectName: 'my-project'
-        cliSources: '.'
+        targetType: 'inline'
+        script: 'npm install'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'npm run build'
+        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+
+
+- job: deploye
+  displayName: deploying code
+  steps:
+    - 
+
+
+    # - task: SonarQubePrepare@8
+    #   inputs:
+    #     SonarQube: 'sonQube'
+    #     scannerMode: 'cli'
+    #     configMode: 'manual'
+    #     cliProjectKey: 'my-project'
+    #     cliProjectName: 'my-project'
+    #     cliSources: '.'
     # - task: PowerShell@2
     #   inputs:
     #     targetType: 'inline'
@@ -45,15 +57,16 @@ jobs:
     #     workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
 
     
-    - task: SonarQubeAnalyze@8
-      inputs:
-        jdkversion: 'JAVA_HOME_17_X64'
-    - task: SonarQubePublish@8
-      inputs:
-        pollingTimeoutSec: '300'
+    # - task: SonarQubeAnalyze@8
+    #   inputs:
+    #     jdkversion: 'JAVA_HOME_17_X64'
+    # - task: SonarQubePublish@8
+    #   inputs:
+    #     pollingTimeoutSec: '300'
 
     # - task: PublishBuildArtifacts@1
     #   inputs:
     #     PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
     #     ArtifactName: 'ReactTodoUI'
     #     publishLocation: 'Container'
+
