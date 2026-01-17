@@ -69,6 +69,12 @@ stages:
               pipelineId: '19'
               artifactName: 'ReactTodoUI'
               targetPath: '$(Pipeline.Workspace)'
+
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: 'sudo cp -r $(Pipeline.Workspace)/* /var/www/html/'
+          
           
           
           
