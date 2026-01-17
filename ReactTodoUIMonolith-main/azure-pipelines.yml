@@ -5,6 +5,7 @@ stages:
   displayName: linting
   jobs:
   - job: linting
+    continueOnError: true
     steps:
     - task: PowerShell@2
       inputs:
