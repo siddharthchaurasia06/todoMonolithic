@@ -1,53 +1,74 @@
 trigger: none
 pool: Default
 stages:
-- stage: build
-  displayName: building react app
-  jobs:
-  - job: linting
-    steps:
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: 'npm i -D -E @biomejs/biome'
-        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+# - stage: build
+#   displayName: building react app
+#   jobs:
+#   - job: linting
+#     steps:
+#     - task: PowerShell@2
+#       inputs:
+#         targetType: 'inline'
+#         script: 'npm i -D -E @biomejs/biome'
+#         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
     
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: 'npx @biomejs/biome init'
-        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: 'npx biome lint .'
-        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+#     - task: PowerShell@2
+#       inputs:
+#         targetType: 'inline'
+#         script: 'npx @biomejs/biome init'
+#         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+#     - task: PowerShell@2
+#       inputs:
+#         targetType: 'inline'
+#         script: 'npx biome lint .'
+#         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
         
-  - job: runbuild
-    displayName: building application
-    steps:
+#   - job: runbuild
+#     displayName: building application
+#     steps:
 
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: 'npm install'
-        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: 'npm run build'
-        workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
-    # - task: PublishBuildArtifacts@1
-    #   inputs:
-    #     PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
-    #     ArtifactName: 'ReactTodoUI'
-    #     publishLocation: 'Container'
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: '$(System.DefaultWorkingDirectory)/ReactTodoUIMonolith-main/build'
-        artifact: 'build-artifact'
-        publishLocation: 'pipeline'
+#     - task: PowerShell@2
+#       inputs:
+#         targetType: 'inline'
+#         script: 'npm install'
+#         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+#     - task: PowerShell@2
+#       inputs:
+#         targetType: 'inline'
+#         script: 'npm run build'
+#         workingDirectory: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main'
+#     # - task: PublishBuildArtifacts@1
+#     #   inputs:
+#     #     PathtoPublish: '$(Build.SourcesDirectory)/ReactTodoUIMonolith-main/build'
+#     #     ArtifactName: 'ReactTodoUI'
+#     #     publishLocation: 'Container'
+#     - task: PublishPipelineArtifact@1
+#       inputs:
+#         targetPath: '$(System.DefaultWorkingDirectory)/ReactTodoUIMonolith-main/build'
+#         artifact: 'build-artifact'
+#         publishLocation: 'pipeline'
 
+- stage: deployToVm
+  displayName: Deploy to VM
+  jobs:
+  - deployment: downloadArtifect
+    displayName: download Artifect
+    environment:
+      name: my env
+      resourceType: virtualMachine
+    strategy:
+      runOnce:
+       deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'specific'
+              project: '775e0587-b963-415e-85f6-eb77cb35ff50'
+              definition: '4'
+              buildVersionToDownload: 'specific'
+              pipelineId: '19'
+              artifactName: 'build-artifact'
+              targetPath: '$(Pipeline.Workspace)'
 
           
           
